@@ -1,0 +1,88 @@
+package org.itheima.googleplay10.activity;
+
+import org.itheima.googleplay10.R;
+import org.itheima.googleplay10.R.drawable;
+import org.itheima.googleplay10.R.id;
+import org.itheima.googleplay10.R.layout;
+import org.itheima.googleplay10.R.menu;
+import org.itheima.googleplay10.R.string;
+import org.itheima.googleplay10.base.BaseActivity;
+
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+
+public class MainActivity extends BaseActivity
+{
+
+	private ActionBar				mActionBar;
+	private DrawerLayout			mDrawerLayout;	// 抽屉
+	private ActionBarDrawerToggle	mDrawerToggle;	// 抽屉开关
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+
+		// 初始化actionbar
+		initActionBar();
+	}
+
+	private void initActionBar()
+	{
+		mActionBar = getSupportActionBar();
+
+		// 设置title
+		mActionBar.setTitle("GooglePlay");
+		// 设置图标
+		mActionBar.setIcon(R.drawable.ic_launcher);
+
+		// 显示up按钮
+		mActionBar.setDisplayHomeAsUpEnabled(true);
+
+		// 创建开关
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+													R.drawable.ic_drawer_am,
+													R.string.drawer_des_open,
+													R.string.drawer_des_close);
+		// 设置drawerlayout的监听
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		// 同步
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				// 打开或关闭抽屉
+				boolean selected = mDrawerToggle.onOptionsItemSelected(item);
+				if (selected) { return true; }
+				break;
+
+			default:
+				break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+}

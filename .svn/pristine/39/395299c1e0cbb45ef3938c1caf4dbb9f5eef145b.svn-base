@@ -1,0 +1,151 @@
+package org.itheima.googleplay10.fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.itheima.googleplay10.R;
+import org.itheima.googleplay10.adapter.SuperBaseAdapter;
+import org.itheima.googleplay10.base.BaseFragment;
+import org.itheima.googleplay10.fragment.LoadingUI.ResultState;
+import org.itheima.googleplay10.utils.UIUtils;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+/**
+ * @项目名: GooglePlay10
+ * @包名: org.itheima.googleplay10.fragment
+ * @类名: HomeFragment
+ * @创建者: 肖琦
+ * @创建时间: 2015-8-22 下午4:23:56
+ * @描述: 首页
+ * 
+ * @svn版本: $Rev$
+ * @更新人: $Author$
+ * @更新时间: $Date$
+ * @更新描述: TODO
+ */
+public class HomeFragment extends BaseFragment
+{
+
+	// @Override
+	// public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	// Bundle savedInstanceState)
+	// {
+	// TextView tv = new TextView(UIUtils.getContext());
+	// tv.setText("首页");
+	//
+	//
+	//
+	// return tv;
+	// }
+
+	private List<String>	mDatas; // 模拟假数据
+
+	// 子线程执行的
+	@Override
+	protected ResultState onStartLoadData()
+	{
+		// 1. 随机加载数据
+		// ResultState[] states = new ResultState[] { ResultState.EMPTY,
+		// ResultState.ERROR, ResultState.SUCCESS };
+		//
+		// try
+		// {
+		// Thread.sleep(1500);
+		// }
+		// catch (InterruptedException e)
+		// {
+		// e.printStackTrace();
+		// }
+		//
+		// Random rdm = new Random();
+		//
+		// return states[rdm.nextInt(states.length)];
+
+		// 2.模拟数据加载
+
+		mDatas = new ArrayList<String>();
+		for (int i = 0; i < 60; i++)
+		{
+			mDatas.add("" + i);
+		}
+
+		try
+		{
+			Thread.sleep(1000);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+
+		return ResultState.SUCCESS;
+	}
+
+	@Override
+	protected View onInitSuccessView()
+	{
+		// TextView tv = new TextView(UIUtils.getContext());
+		// tv.setText("首页");
+		// return tv;
+
+		// listView
+		ListView mListView = new ListView(UIUtils.getContext());
+
+		// 给listView设置数据
+		mListView.setAdapter(new HomeAdapter(mDatas));// adapter-->List<数据类型>
+
+		return mListView;
+	}
+
+	private class HomeAdapter extends SuperBaseAdapter<String>
+	{
+
+		public HomeAdapter(List<String> datas) {
+			super(datas);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			ViewHolder holder = null;
+			if (convertView == null)
+			{
+				// 没有复用
+				// 1. 加载布局
+				convertView = View.inflate(UIUtils.getContext(), R.layout.item_tmp, null);
+				// 2. 初始化holder
+				holder = new ViewHolder();
+				// 3. 设置标记
+				convertView.setTag(holder);
+				// 4. 查找view
+				holder.tv1 = (TextView) convertView.findViewById(R.id.tmp_tv_1);
+				holder.tv2 = (TextView) convertView.findViewById(R.id.tmp_tv_2);
+			}
+			else
+			{
+				// 有复用
+				holder = (ViewHolder) convertView.getTag();
+			}
+
+			// 给view设置数据
+			String data = mDatas.get(position);
+			holder.tv1.setText("标题 : " + data);
+			holder.tv2.setText("内容 : " + data);
+
+			return convertView;
+		}
+	}
+
+	private class ViewHolder
+	{
+		TextView	tv1;
+		TextView	tv2;
+	}
+
+}

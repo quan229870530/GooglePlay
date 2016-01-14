@@ -1,0 +1,42 @@
+package org.itheima.googleplay10.base;
+
+import org.itheima.googleplay10.fragment.LoadingUI;
+import org.itheima.googleplay10.utils.UIUtils;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+/**
+ * @项目名: GooglePlay10
+ * @包名: org.itheima.googleplay10
+ * @类名: BaseFragment
+ * @创建者: 肖琦
+ * @创建时间: 2015-8-22 上午11:24:49
+ * @描述: TODO
+ * 
+ * @svn版本: $Rev$
+ * @更新人: $Author$
+ * @更新时间: $Date$
+ * @更新描述: TODO
+ */
+public class BaseFragment extends Fragment
+{
+
+	// UI角度:
+	// 共同点: 加载中，加载失败，加载为空
+	// 不同点: 加载成功后的显示
+	// 页面顺序显示： 加载中 ---》 加载失败
+	// ---> 加载为空
+	// ---> 加载成功
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+
+		// 容器(加载中，加载失败，加载为空,加载成功)//切换页面显示
+		return new LoadingUI(UIUtils.getContext());
+	}
+}

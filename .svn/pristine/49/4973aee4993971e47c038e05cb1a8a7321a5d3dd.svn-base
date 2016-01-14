@@ -1,0 +1,100 @@
+package org.itheima.googleplay10.fragment;
+
+import org.itheima.googleplay10.R;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.FrameLayout;
+
+/**
+ * @项目名: GooglePlay10
+ * @包名: org.itheima.googleplay10.fragment
+ * @类名: LoadingUI
+ * @创建者: 肖琦
+ * @创建时间: 2015-8-23 上午8:55:59
+ * @描述: TODO
+ * 
+ * @svn版本: $Rev$
+ * @更新人: $Author$
+ * @更新时间: $Date$
+ * @更新描述: TODO
+ */
+public class LoadingUI extends FrameLayout
+{
+	// 容器(加载中，加载失败，加载为空,加载成功)//切换页面显示
+
+	private static final int	STATE_NONE		= 0;			// 没有状态
+	private static final int	STATE_LOADING	= 1;
+	private static final int	STATE_ERROR		= 2;
+	private static final int	STATE_EMPTY		= 3;
+	private static final int	STATE_SUCCESS	= 4;
+
+	private View				mLoadingView;					// 加载中
+	private View				mErrorView;					// 加载失败
+	private View				mEmptyView;					// 加载为空
+
+	private int					mCurrentState	= STATE_NONE;	// 记录当前的状态
+
+	public LoadingUI(Context context) {
+		this(context, null);
+	}
+
+	public LoadingUI(Context context, AttributeSet attrs) {
+		super(context, attrs);
+
+		// 添加view到容器中
+
+		// 加载中
+		if (mLoadingView == null)
+		{
+			mLoadingView = View.inflate(getContext(), R.layout.pager_loading, null);
+			addView(mLoadingView);
+		}
+
+		// 加载失败
+		if (mErrorView == null)
+		{
+			mErrorView = View.inflate(getContext(), R.layout.pager_error, null);
+			addView(mErrorView);
+		}
+		// 加载为空
+		if (mEmptyView == null)
+		{
+			mEmptyView = View.inflate(getContext(), R.layout.pager_empty, null);
+			addView(mEmptyView);
+		}
+
+		// 加载成功 : TODO:
+
+		// 根据当前的状态判断UI显示
+		updateUI();
+	}
+
+	private void updateUI()
+	{
+		// 根据当前的状态判断UI显示
+		// if (mCurrentState == STATE_NONE || mCurrentState == STATE_LOADING)
+		// {
+		// mLoadingView.setVisibility(View.VISIBLE);
+		// }
+		// else
+		// {
+		// mLoadingView.setVisibility(View.GONE);
+		// }
+
+		// 加载中的是否显示
+		mLoadingView.setVisibility((mCurrentState == STATE_NONE || mCurrentState == STATE_LOADING)
+																									? View.VISIBLE : View.GONE);
+
+		// 加载失败是否显示
+		mErrorView.setVisibility(mCurrentState == STATE_ERROR ? View.VISIBLE : View.GONE);
+
+		// 加载为空是否显示
+		mEmptyView.setVisibility(mCurrentState == STATE_EMPTY ? View.VISIBLE : View.GONE);
+
+		// 加载成功是否显示 TODO:
+		// mErrorView.setVisibility(mCurrentState == STATE_ERROR ? View.VISIBLE
+		// : View.GONE);
+	}
+}
