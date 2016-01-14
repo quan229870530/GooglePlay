@@ -6,6 +6,6 @@ import android.widget.Toast;
 public class test {
 	public test() {
 		// TODO Auto-generated constructor stub
-		Log.e("TAG", "this is a test class!!!");
+		System.out.print("this is second modify");
 	}
 }
